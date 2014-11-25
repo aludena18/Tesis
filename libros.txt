@@ -1,0 +1,8 @@
+libros utilizados
+
+carpeta			libro
+
+gsm&gprs		capituloI_gsm_gprs
+gsm&gprs		concepto de redes gsm_gprs
+gprs			memoria completa (capitulo GPRS)
+gprs			3.4 GPRS
