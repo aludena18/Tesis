@@ -3,9 +3,9 @@ unsigned int tstart;
 #define RESTART asm("jmp 0x0000")
 
 #include <SoftwareSerial.h>
-SoftwareSerial camSerial(2, 3);
-SoftwareSerial gpsSerial(4, 5);
-SoftwareSerial gsmSerial(7, 8);
+SoftwareSerial camSerial(50, 51);    //para arduino UNO (2,3); para MEGA (50,51)
+SoftwareSerial gpsSerial(10, 11);    //para arduino UNO (4,5); para MEGA (10,11)
+SoftwareSerial gsmSerial(52, 53);    //para arduino UNO (7,8); para MEGA (52,53)
 
 //VARIABLES PARA CAMARA
 byte incomingbyte;
@@ -21,6 +21,7 @@ const int pinOnGsm= 9;
 
 //VARIABLE GPS
 char readSerial[49];
+byte contadorGps = 0;
 
 //CONFIGURACION DE SENSOR MAGNETICO Y LED
 const int  buttonPin = 12;    // el número del pin, entrada del pulsador
@@ -41,8 +42,9 @@ void setup(){
   
   //CONFIGURANDO PINES GSM //RESET y CONEXION UDP MODULO GSM
   pinMode(pinOnGsm,OUTPUT);
-  digitalWrite(pinOnGsm,LOW); 
-  powerGsm();connGsm();
+  digitalWrite(pinOnGsm,LOW);
+  powerGsm();
+  connGsm();
   
   //INICIANDO SENSOR MAGNETICO Y LED13
   pinMode(ledPin, OUTPUT);
@@ -98,7 +100,7 @@ void coberturaGsm(){
         delay(1000);
         Serial.println("Restableciendo conexion...");
       }
-      while (sendATcommand("AT+CIPSTART=\"UDP\",\"10.40.0.20\",\"9100\"", "CONNECT OK", 3000) != 1){
+      while (sendATcommand("AT+CIPSTART=\"UDP\",\"10.40.0.20\",\"8000\"", "CONNECT OK", 3000) != 1){
          delay(1000);
          Serial.println("conectando...");
       }
@@ -152,27 +154,37 @@ void gps(){
   byte inByte = '\0';
   while(inByte!='$'){inByte=gpsSerial.read();}
   
+  contadorGps++; Serial.println(contadorGps);
   if(inByte=='$'){
+    
     while(gpsSerial.available()<50){;}
-     for(int i=1;i<51;i++){readSerial[i]= gpsSerial.read();}
+    for(int i=1;i<51;i++){readSerial[i]= gpsSerial.read();}
+    
    }
    
-   readSerial[0]='$'; readSerial[49]='\0'; 
-   gpsWriteGsm();
-   Serial.println(readSerial);
+   readSerial[0]='$'; readSerial[49]='\0';
+   
+   //if(contadorGps == 3){
+     gpsWriteGsm();
+     Serial.println(readSerial);
+     contadorGps = 0;
+   //}
    memset(readSerial,'\0',49); 
 }
 
 //------------CONFIGURACION MODULO GPS--------------          
 void setupGps(){
   gpsSerial.listen();
+  delay(500);
   gpsSerial.println("$PMTK314,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29");
+  delay(100);
   gpsSerial.println("$PMTK300,10000,0,0,0,0*2C");
   Serial.println("Modulo GPS iniciado!!");
 }
 
 //--------------ENCENDIDO O RESET MODULO GSM
 void powerGsm(){
+  Serial.println("Encendiendo el modulo GSM");
   gsmSerial.listen();
   uint8_t answer=0;
   answer = sendATcommand("AT", "OK", 500);
@@ -218,7 +230,7 @@ void connGsm(){
       Serial.println("ERROR IP");
     }
     
-    while (sendATcommand("AT+CIPSTART=\"UDP\",\"10.40.0.20\",\"9100\"", "CONNECT OK", 1000) != 1){
+    while (sendATcommand("AT+CIPSTART=\"UDP\",\"10.40.0.20\",\"8000\"", "CONNECT OK", 1000) != 1){
       Serial.println("ERROR OPEN SOCKET");
     }
     
