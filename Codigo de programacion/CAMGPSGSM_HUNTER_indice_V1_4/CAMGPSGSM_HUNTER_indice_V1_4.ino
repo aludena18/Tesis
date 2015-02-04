@@ -141,7 +141,7 @@ void sendPhoto(){
     for(j=0;j<count;j++){
       if(cam[j]<0x10){ Serial.print("0");}
       Serial.print(cam[j],HEX);
-      if((cam[j-1]==0xFF)&&(cam[j]==0xD9)) {Serial.println();Serial.println("Fin de creacion de Imagen!!"); indice=0;}
+      if((cam[j-1]==0xFF)&&(cam[j]==0xD9)) {Serial.println();Serial.println("IMAGEN CREADA"); indice=0;}
     }
     Serial.println();
     }
@@ -179,12 +179,11 @@ void setupGps(){
   gpsSerial.println("$PMTK314,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29");
   delay(100);
   gpsSerial.println("$PMTK300,10000,0,0,0,0*2C");
-  Serial.println("Modulo GPS iniciado!!");
+  Serial.println("INICIO DE MODULO GPS OK");
 }
 
 //--------------ENCENDIDO O RESET MODULO GSM
 void powerGsm(){
-  Serial.println("Encendiendo el modulo GSM");
   gsmSerial.listen();
   uint8_t answer=0;
   answer = sendATcommand("AT", "OK", 500);
@@ -204,7 +203,7 @@ void powerGsm(){
     digitalWrite(pinOnGsm,LOW);
   }
   
-  Serial.println("Starting GSM Module...");
+  Serial.println("ENCENDIDO DE MODULO GSM OK");
 }
 
 //-------------COMANDO PARA ENVIAR DATOS GPS MODULO GSM--------------------
@@ -223,7 +222,7 @@ void connGsm(){
     }
 
     while (sendATcommand("AT+CIICR", "OK", 4000) != 1){
-      Serial.println("ERROR WIRELESS CONNECTION");
+      Serial.println("ERROR CONEXION WIRELESS");
     }
     
     while (sendATcommand("AT+CIFSR", ".", 1000) != 1){
@@ -231,10 +230,11 @@ void connGsm(){
     }
     
     while (sendATcommand("AT+CIPSTART=\"UDP\",\"10.40.0.20\",\"8000\"", "CONNECT OK", 1000) != 1){
-      Serial.println("ERROR OPEN SOCKET");
+      Serial.println("ERROR AL ABRIR SOCKET");
     }
     
-    Serial.println("CONNECTED AND WAITING FOR TRANSFER DATA");
+    Serial.println("INICIO DE MODULO GSM OK\n");
+    Serial.println("MODULO CONECTADO");
     delay(2000);
     digitalWrite(ledPin, HIGH);
     
@@ -303,7 +303,7 @@ int8_t sendATcommandgsm(char* ATcommand, char* expected_answer1, char* expected_
 void SendResetCmd()
 {
       camSerial.listen();
-      Serial.println("Iniciando la camara");
+      Serial.println("INICIANDO CAMARA");
       camSerial.write(0x56);
       camSerial.write(byte(0x00));
       camSerial.write(0x26);
