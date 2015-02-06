@@ -54,7 +54,7 @@ void setup(){
 
 
 void loop() 
-{ //gps();
+{ gps();
   statusButton();
   gsmSerialAvailable();
 }
@@ -151,10 +151,30 @@ void sendPhoto(){
 //-----------CAPTURA E IMPRESION GPS---------------------
 void gps(){
   gpsSerial.listen();
-  byte inByte = '\0';
+  
+  
+  char readByte;
+  char tramaGPS[50];
+  memset(tramaGPS,0,50);
+  int i = 0;
+  
+  delay(100);
+  
+  if (gpsSerial.available()>0){
+    while (gpsSerial.available()>0){
+        tramaGPS[i]= gpsSerial.read();
+        i++;
+        //Serial.print(tramaGPS[i]);
+      //readByte = gpsSerial.read();
+      
+    }
+    Serial.print(tramaGPS);
+      //delay(100);
+  }
+  
+  /*byte inByte = '\0';
   while(inByte!='$'){inByte=gpsSerial.read();}
   
-  contadorGps++; Serial.println(contadorGps);
   if(inByte=='$'){
     
     while(gpsSerial.available()<50){;}
@@ -164,12 +184,11 @@ void gps(){
    
    readSerial[0]='$'; readSerial[49]='\0';
    
-   //if(contadorGps == 3){
      gpsWriteGsm();
      Serial.println(readSerial);
      contadorGps = 0;
-   //}
    memset(readSerial,'\0',49); 
+   */
 }
 
 //------------CONFIGURACION MODULO GPS--------------          
