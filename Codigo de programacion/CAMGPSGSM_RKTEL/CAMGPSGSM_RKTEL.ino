@@ -100,7 +100,7 @@ void coberturaGsm(){
         delay(1000);
         Serial.println("Restableciendo conexion...");
       }
-      while (sendATcommand("AT+CIPSTART=\"UDP\",\"10.40.0.20\",\"8000\"", "CONNECT OK", 3000) != 1){
+      while (sendATcommand("AT+CIPSTART=\"UDP\",\"aludena.no-ip.biz\",\"3008\"", "CONNECT OK", 3000) != 1){
          delay(1000);
          Serial.println("conectando...");
       }
@@ -156,19 +156,23 @@ void gps(){
   char readByte;
   char tramaGPS[50];
   memset(tramaGPS,0,50);
+  memset(readSerial,0,49);
   int i = 0;
   
   delay(100);
   
   if (gpsSerial.available()>0){
     while (gpsSerial.available()>0){
-        tramaGPS[i]= gpsSerial.read();
+        readSerial[i]= gpsSerial.read();
         i++;
+        delay(10);
         //Serial.print(tramaGPS[i]);
       //readByte = gpsSerial.read();
       
     }
-    Serial.print(tramaGPS);
+    //gpsWriteGsm();
+    Serial.print(readSerial);
+    i=0;
       //delay(100);
   }
   
@@ -228,6 +232,7 @@ void powerGsm(){
 //-------------COMANDO PARA ENVIAR DATOS GPS MODULO GSM--------------------
 void gpsWriteGsm(){
    gsmSerial.listen();
+   delay(500);
    gsmSerial.println("AT+CIPSEND=49"); 
    delay(150);
    gsmSerial.print(readSerial); 
@@ -236,7 +241,7 @@ void gpsWriteGsm(){
 //------------CREANDO SOCKET UDP MODULO GSM-------------------
 void connGsm(){
     delay(10000);
-    while (sendATcommand("AT+CSTT=\"CARSEG.CLARO.PE\"", "OK", 1500) != 1){
+    while (sendATcommand("AT+CSTT=\"CLARO.PE\"", "OK", 1500) != 1){
       Serial.println("ERROR APN");
     }
 
@@ -248,7 +253,7 @@ void connGsm(){
       Serial.println("ERROR IP");
     }
     
-    while (sendATcommand("AT+CIPSTART=\"UDP\",\"10.40.0.20\",\"8000\"", "CONNECT OK", 1000) != 1){
+    while (sendATcommand("AT+CIPSTART=\"UDP\",\"aludena.no-ip.biz\",\"3008\"", "CONNECT OK", 1000) != 1){
       Serial.println("ERROR AL ABRIR SOCKET");
     }
     
