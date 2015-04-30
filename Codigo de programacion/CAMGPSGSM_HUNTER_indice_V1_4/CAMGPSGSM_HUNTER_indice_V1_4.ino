@@ -54,7 +54,7 @@ void setup(){
 
 
 void loop() 
-{ gps();
+{ //gps();
   statusButton();
   gsmSerialAvailable();
 }
