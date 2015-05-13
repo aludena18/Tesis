@@ -100,7 +100,7 @@ void coberturaGsm(){
         delay(1000);
         Serial.println("Restableciendo conexion...");
       }
-      while (sendATcommand("AT+CIPSTART=\"UDP\",\"10.40.0.20\",\"8000\"", "CONNECT OK", 3000) != 1){
+      while (sendATcommand("AT+CIPSTART=\"UDP\",\"190.238.95.12\",\"8000\"", "CONNECT OK", 3000) != 1){
          delay(1000);
          Serial.println("conectando...");
       }
@@ -236,7 +236,7 @@ void gpsWriteGsm(){
 //------------CREANDO SOCKET UDP MODULO GSM-------------------
 void connGsm(){
     delay(10000);
-    while (sendATcommand("AT+CSTT=\"CARSEG.CLARO.PE\"", "OK", 1500) != 1){
+    while (sendATcommand("AT+CSTT=\"MOVISTAR.PE\"", "OK", 1500) != 1){
       Serial.println("ERROR APN");
     }
 
@@ -248,7 +248,7 @@ void connGsm(){
       Serial.println("ERROR IP");
     }
     
-    while (sendATcommand("AT+CIPSTART=\"UDP\",\"10.40.0.20\",\"8000\"", "CONNECT OK", 1000) != 1){
+    while (sendATcommand("AT+CIPSTART=\"UDP\",\"190.238.95.12\",\"8000\"", "CONNECT OK", 1000) != 1){
       Serial.println("ERROR AL ABRIR SOCKET");
     }
     
