@@ -1,0 +1,4 @@
+-Precisar fuentes, formato APA
+-Cuadro comparativo de eleccion de plataforma y ponderar la eleccion
+-Evaluacion cualitativa del modulo GSM-GPRS
+-Caracteristicas y comandos del formato GLL del protocolo NMEA (esto ya esta explicado en Anexos)

@@ -1,0 +1,35 @@
+1.- Empresas similares Nacional o Extranjero , costos.
+
+En el mercado internacional existen empresas que ofrecen soluciones para el rastreo de vehiculos,
+y algunas que incorporan la integracion con camaras seriales son:
+
+La empresa Queclink, ubicada en Shanghai, China, cuenta con el equipo GV300 el cual mediante su puerto serial realiza la
+comunicacion bidireccional con una camara serial.
+
+...Queclink 
+
+El accesorio incluye una cámara RS232 y un adaptador de corriente. La cámara RS232 es una cámara de 300K pixeles 
+con salida de nivel lógico RS232, que puede conectarse directamente con equipos de la serie GV (con puerto RS232) de Queclink. 
+
+...
+
+La empresa Meitrack, ubicada en Shenzhen, China, cuenta con los equipos MVT600 y T1 los cuales mediante su puerto serial realizan
+la comunicacion bidireccional con una camara serial.
+
+
+2.- Desventajas del proyecto.
+
+- Tamaño del dispositivo, es muy grande en comparacion con los equipos de rastreo vehicular actual.
+- Extendido tiempo de instalacion, por poseer antenas externas, el tiempo en la instalacion puede pasar las 4 horas aprox.
+- El consumo de corriente es elevado, al no poseer algoritmo de ahorro de corriente, presenta desventaja contra otros dispositivos de rastreo vehicular.
+- No posee acelerometro, para la supervision del manejo del vehiculo (frenado brusco, aceleracion brusca, giros bruscos y deteccion de choque).
+- No posee algoritmo de reconocimiento de perdida de dato, las imagenes se pueden generar con fallas, como lineas horizontales grises o en el peor 
+de los casos no generarse.
+- No cuenta con almacenamiento SD para un backup de informacion de imagenes.
+
+3.- Implementacion de mejoras.
+
+-Algoritmo de reconocimiento de perdida de dato.
+-Algoritmo de bajo consumo de corriente.
+-Incorporacion de SD para backup de imagenes.
+
